@@ -15,19 +15,25 @@ namespace ConsoleUI
             ListAllCarItems();
             ListCarDetails();
 
+            //UserManager userManager = new UserManager(new EFUserDal());
+            //userManager.Add(new User() { UserId = 1, FirstName = "Kerem", LastName = "Ersan", Email = "test@gmail.com", Password = "123" });
+
+            RentalManager rentalManager = new RentalManager(new EFRentalDal());
+            rentalManager.Rent(new Rental() { Id = 1, CarId = 1, CustomerId = 1, RentDate = new DateTime()});
+
         }
 
         private static void ListCarDetails()
         {
             CarManager carManager = new CarManager(new EFCarDal());
-            foreach (var carDetails in carManager.GetCarDetails())
+            foreach (var carDetails in carManager.GetCarDetails().Data)
                 Console.WriteLine($"{carDetails.CarName} -- {carDetails.ColorName} -- {carDetails.BrandName} -- {carDetails.DailyPrice}");
         }
 
         private static void ListAllCarItems()
         {
             CarManager carManager = new CarManager(new EFCarDal());
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
                 Console.WriteLine("Car name: " + car.Description);
         }
 
